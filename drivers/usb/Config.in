@@ -1,0 +1,38 @@
+#
+# USB device configuration
+#
+mainmenu_option next_comment
+comment 'USB support'
+
+dep_tristate 'Support for USB' CONFIG_USB $CONFIG_PCI
+if [ "$CONFIG_USB" = "y" -o  "$CONFIG_USB" = "m" ]; then
+   source drivers/usb/core/Config.in
+
+   source drivers/usb/host/Config.in
+
+   source drivers/usb/class/Config.in
+
+   source drivers/usb/storage/Config.in
+
+   source drivers/usb/input/Config.in
+ 
+   source drivers/usb/image/Config.in
+
+   source drivers/usb/media/Config.in
+
+   source drivers/usb/net/Config.in
+
+   comment 'USB port drivers'
+   dep_tristate '  USS720 parport driver' CONFIG_USB_USS720 $CONFIG_USB $CONFIG_PARPORT
+
+   source drivers/usb/serial/Config.in
+
+   comment 'USB Miscellaneous drivers'
+   dep_tristate '  EMI 2|6 USB Audio interface support' CONFIG_USB_EMI26 $CONFIG_USB_AUDIO
+   dep_tristate '  Texas Instruments Graph Link USB (aka SilverLink) cable support' CONFIG_USB_TIGL $CONFIG_USB
+   dep_tristate '  USB Auerswald ISDN support (EXPERIMENTAL)' CONFIG_USB_AUERSWALD $CONFIG_USB $CONFIG_EXPERIMENTAL
+   dep_tristate '  USB Diamond Rio500 support (EXPERIMENTAL)' CONFIG_USB_RIO500 $CONFIG_USB $CONFIG_EXPERIMENTAL
+   dep_tristate '  Tieman Voyager USB Braille display support (EXPERIMENTAL)' CONFIG_USB_BRLVGER $CONFIG_USB $CONFIG_EXPERIMENTAL
+
+fi
+endmenu
